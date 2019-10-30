@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { PureComponent, Suspense } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { PageLoading } from './components/PageLoading';
@@ -8,17 +8,19 @@ import BaseLayout from './layouts/BaseLayout';
 
 import './App.css';
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Suspense fallback={<PageLoading />}>
-        <Switch>
-          <Route path="/login" exact component={Login} />
-          <AuthRoute path="/" component={BaseLayout} />
-        </Switch>
-      </Suspense>
-    </BrowserRouter>
-  );
+export class App extends PureComponent {
+  render() {
+    return (
+      <BrowserRouter>
+        <Suspense fallback={<PageLoading />}>
+          <Switch>
+            <Route path="/login" exact component={Login} />
+            <AuthRoute path="/" component={BaseLayout} />
+          </Switch>
+        </Suspense>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;
