@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Form, Icon, Input, message,
+  Form, Icon, Input, message
 } from 'antd';
 
 import { LoginButton } from './Button';
@@ -15,7 +15,7 @@ class Login extends PureComponent {
 
   handleSubmit = () => {
     const { form: { validateFields } } = this.props;
-    validateFields(async (err, values) => {
+    validateFields(async (err) => {
       if (!err) {
         this.setState({ loading: true });
         try {
