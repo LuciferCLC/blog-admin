@@ -1,0 +1,208 @@
+import React, { PureComponent } from 'react';
+import { Divider, Table } from 'antd';
+import dayjs from 'dayjs';
+
+import { RadioSelect } from '@/components/RadioSelect';
+import { TextButton } from '@/components/TextButton';
+
+import { ExpandedRowRender } from './ExpandedRowRender';
+import { ComponentsModal } from './CommentModal';
+
+const { Column } = Table;
+
+class Comments extends PureComponent {
+  state = {
+    _id: '',
+    visible: false,
+    content: '',
+    author: {
+      name: '',
+      email: '',
+      site: '',
+    },
+    offset: 0,
+    limit: 10,
+    keyword: '',
+    state: 'TODO',
+  };
+
+  search = (keyword) => {
+    this.setState({
+      keyword,
+    });
+  };
+
+  onChange = (e, typeName) => {
+    this.setState({
+      [typeName]: e.target.value,
+    });
+  };
+
+  updateRecord = ({ _id, content, author }) => {
+    this.setState({
+      visible: true,
+      _id,
+      content,
+      author,
+    });
+  };
+
+  handleCancel = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  render() {
+    const typeList = [
+      {
+        name: '状态',
+        typeName: 'state',
+        list: [
+          { name: '待审核', id: 'TODO' },
+          { name: '审核通过', id: 'SUCCESS' },
+          { name: '审核不通过', id: 'FAIL' }
+        ],
+        defaultValue: 'TODO',
+      }
+    ];
+
+    return (
+      <div>
+        <RadioSelect
+          typeList={typeList}
+          onSearch={this.search}
+          onChange={this.onChange}
+        />
+        <div className="content">
+          <Table
+            // dataSource={result.docs}
+            // loading={loading || networkStatus === 4}
+            rowKey="_id"
+            // pagination={pagination}
+            expandedRowRender={ExpandedRowRender}
+          >
+            <Column
+              key="post_id"
+              title="articleId"
+              dataIndex="post_id"
+              width="80"
+            />
+            <Column
+              key="name"
+              title="Name"
+              dataIndex="author.name"
+              width="120"
+            />
+            <Column
+              key="email"
+              title="Email"
+              dataIndex="author.email"
+              width="120"
+            />
+            <Column
+              key="site"
+              title="Site"
+              dataIndex="author.site"
+              width="120"
+              render={(text) => (
+                <a rel="noopener noreferrer" href={text} target="_blank">
+                  {text}
+                </a>
+              )}
+            />
+            <Column
+              key="create_at"
+              title="Create_at"
+              dataIndex="create_at"
+              width="200px"
+              render={(text) => dayjs(text).format('YYYY-MM-DD hh:mm:ss')}
+            />
+            <Column
+              key="state"
+              title="State"
+              dataIndex="state"
+              width="100px"
+            />
+
+            <Column
+              title="Action"
+              key="action"
+              width="300px"
+              render={(text, record) => (
+                <>
+                  <TextButton
+                    onClick={() => this.updateRecord(record)}
+                  >
+                    edit
+                  </TextButton>
+
+                  <Divider type="vertical" />
+                  {/* {record.state !== 'SUCCESS' && (
+                    <CommentsMutations
+                      mutation={UPDATE_COMMENT}
+                      refetch={refetch}
+                      ItemName={/^CommentsItem/}
+                      variables={{
+                        _id: record._id,
+                        state: 'SUCCESS'
+                      }}
+                      text="通 过"
+                    />
+                  )} */}
+                  {record.state === 'TODO' && (
+                    <Divider type="vertical" />
+                  )}
+
+                  {/* {record.state !== 'FAIL' && (
+                    <CommentsMutations
+                      mutation={UPDATE_COMMENT}
+                      refetch={refetch}
+                      ItemName={/^CommentsItem/}
+                      variables={{
+                        _id: record._id,
+                        state: 'FAIL'
+                      }}
+                      text="不通过"
+                    />
+                  )} */}
+                  <Divider type="vertical" />
+                  {/* <MutationComponent
+                    // mutation={DELETE_COMMENT}
+                    refetch={refetch}
+                    ItemName={/^CommentsItem/}
+                  >
+                    {(mutation) => (
+                      <Popconfirm
+                        title="Sure to delete?"
+                        // onConfirm={() =>
+                        //   mutation({
+                        //     variables: {
+                        //       _id: record._id,
+                        //       post_id: record.post_id
+                        //     }
+                        //   })
+                        // }
+                      >
+                        <TextButton disabled={loading}>
+                          Delete
+                        </TextButton>
+                      </Popconfirm>
+                    )}
+                  </MutationComponent> */}
+                </>
+              )}
+            />
+          </Table>
+          <ComponentsModal
+            handleCancel={this.handleCancel}
+            // mutation={UPDATE_COMMENT}
+            {...this.state}
+          />
+        </div>
+      </div>
+    );
+  }
+}
+
+export default Comments;

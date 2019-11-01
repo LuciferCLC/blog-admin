@@ -21,7 +21,7 @@ const AuthRoute = ({ component: Component, ...rest }) => (
 );
 
 AuthRoute.propTypes = {
-  component: React.ComponentClass.isRequired,
+  component: PropTypes.node.isRequired,
   location: PropTypes.shape({}).isRequired,
 };
 
