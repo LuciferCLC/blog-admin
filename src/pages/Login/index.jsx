@@ -1,8 +1,12 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import {
   Form, Icon, Input, message
 } from 'antd';
+
+import * as action from '@/redux/actions/auth';
 
 import { LoginButton } from './Button';
 
@@ -14,12 +18,19 @@ class Login extends PureComponent {
   }
 
   handleSubmit = () => {
-    const { form: { validateFields } } = this.props;
-    validateFields(async (err) => {
+    const { form: { validateFields }, login } = this.props;
+    console.log(this.props);
+    validateFields(async (err, values) => {
       if (!err) {
         this.setState({ loading: true });
         try {
-          // const { data: { login } } = await
+          const result = await login(values);
+          console.log('result', result);
+          if (result.login) {
+            window.localStorage.setItem('TOKEN', JSON.stringify(result.login));
+            // const path = this.props.location.state.from.pathname;
+            // this.props.history.push(path || '/dashboard');
+          }
         } catch (error) {
           message.error(error);
           this.setState({
@@ -43,7 +54,7 @@ class Login extends PureComponent {
             {getFieldDecorator('username', {
               rules: [
                 { required: true, message: '请输入姓名' },
-                { min: 6, message: '最小长度为 6 位' }
+                { min: 1, message: '最小长度为 1 位' }
               ],
             })(
               <Input
@@ -89,4 +100,8 @@ Login.propTypes = {
   }).isRequired,
 };
 
-export default Form.create()(Login);
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  login: action.login,
+}, dispatch);
+
+export default Form.create()(connect(null, mapDispatchToProps)(Login));
