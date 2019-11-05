@@ -36,6 +36,6 @@ export const BaseMenu = ({ menu, ...props }) => (
 
 BaseMenu.propTypes = {
   menu: PropTypes.arrayOf(PropTypes.shape({
-    subMenu: PropTypes.arrayOf(),
+    subMenu: PropTypes.arrayOf(PropTypes.shape({})),
   })).isRequired,
 };

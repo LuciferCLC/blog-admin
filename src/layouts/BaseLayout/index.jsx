@@ -1,9 +1,31 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as actions from '@/redux/actions/auth';
 
 import { ContentLayout } from './Layout';
 
-const BaseLayout = (data) => (
-  <ContentLayout useInfo={data || {}} />
-);
+class BaseLayout extends PureComponent {
+  componentDidMount() {
+    const { initAuth } = this.props;
+    initAuth();
+  }
 
-export default BaseLayout;
+  render() {
+    return (
+      <ContentLayout useInfo={{}} />
+    );
+  }
+}
+
+const mapStateToProps = (state) => {
+  console.log('state', state);
+  return {};
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  initAuth: actions.initAuth,
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(BaseLayout);

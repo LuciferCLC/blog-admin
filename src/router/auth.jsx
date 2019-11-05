@@ -22,7 +22,11 @@ const AuthRoute = ({ component: Component, ...rest }) => (
 
 AuthRoute.propTypes = {
   component: PropTypes.node.isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: PropTypes.shape({}),
+};
+
+AuthRoute.defaultProps = {
+  location: null,
 };
 
 export { AuthRoute };

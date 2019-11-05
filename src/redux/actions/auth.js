@@ -65,15 +65,14 @@ import * as dao from '../api/auth';
 
 
 const {
-  login, initAuth, putAuth, getOpt, putOpt,
+  initAuth, putAuth, getOpt, putOpt,
 } = createActions({
-  LOGIN: (params) => dao.login(params),
-  INIT_AUTH: () => dao.getAuth(),
+  INIT_AUTH: () => dao.getAuth().then(({ result }) => result),
   PUT_AUTH: ({ ...user }) => dao.putAuth(user),
   GET_OPT: () => dao.getOpt(),
   PUT_OPT: ({ ...option }) => dao.putOpt(option),
 });
 
 export {
-  login, initAuth, putAuth, getOpt, putOpt
+  initAuth, putAuth, getOpt, putOpt
 };

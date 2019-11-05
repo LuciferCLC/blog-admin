@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 
-const Dashboard = lazy(() => import('@/pages/Dashboard.jsx'));
+const Dashboard = lazy(() => import('@/pages/Dashboard'));
 const ArticlesList = lazy(() => import('@/pages/ArticlesList'));
 const ArticlesRelease = lazy(() => import('@/pages/ArticleRelease.jsx'));
 const Comments = lazy(() => import('@/pages/Comments'));
