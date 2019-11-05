@@ -1,12 +1,11 @@
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import {
   Form, Icon, Input, message
 } from 'antd';
+import { get } from 'lodash-es';
 
-import * as action from '@/redux/actions/auth';
+import * as api from '@/redux/api/auth';
 
 import { LoginButton } from './Button';
 
@@ -18,25 +17,27 @@ class Login extends PureComponent {
   }
 
   handleSubmit = () => {
-    const { form: { validateFields }, login } = this.props;
-    console.log(this.props);
-    validateFields(async (err, values) => {
+    const {
+      form: { validateFields },
+      location,
+      history: { push },
+    } = this.props;
+    validateFields((err, values) => {
       if (!err) {
         this.setState({ loading: true });
-        try {
-          const result = await login(values);
-          console.log('result', result);
-          if (result.login) {
-            window.localStorage.setItem('TOKEN', JSON.stringify(result.login));
-            // const path = this.props.location.state.from.pathname;
-            // this.props.history.push(path || '/dashboard');
+        api.login(values).then(({ result }) => {
+          if (result.token) {
+            message.success('登陆成功！');
+            window.localStorage.setItem('TOKEN', JSON.stringify(result));
+            const path = get(location, ['state', 'from', 'pathname'], null);
+            push(path || '/dashboard');
           }
-        } catch (error) {
+        }).catch((error) => {
           message.error(error);
           this.setState({
             loading: false,
           });
-        }
+        });
       } else {
         message.error(err);
       }
@@ -98,10 +99,10 @@ Login.propTypes = {
     getFieldDecorator: PropTypes.func.isRequired,
     validateFields: PropTypes.func.isRequired,
   }).isRequired,
+  location: PropTypes.shape({}).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  login: action.login,
-}, dispatch);
-
-export default Form.create()(connect(null, mapDispatchToProps)(Login));
+export default Form.create()(Login);

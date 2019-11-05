@@ -4,8 +4,8 @@ import { login } from '../actions/auth';
 const IntitalizeValue = {};
 const authReducer = handleAction(
   [login],
-  (state) => ({
-    login: state.login,
+  (state, { payload = {} }) => ({
+    login: payload.result,
   }),
   IntitalizeValue
 );
