@@ -1,10 +1,10 @@
-// 参考 https://github.com/RukiQ/redux-async-demo/blob/master/redux-async-demo/src/reducers/index.js
+import { fork } from 'redux-saga/effects';
 
-// import { takeEvery, call, put } from 'redux-saga/effects';
+import { watchGetAuth } from './auth';
 
-// import ax from './axios';
+// root saga
+function* rootSaga() {
+  yield fork(watchGetAuth);
+}
 
-// function *getAuth() {
-//   const response = yield call(ax.get, '/auth');
-//   yield put({ type: 'INIT_AUTH_SUCCESS', response: response.result });
-// }
+export default rootSaga;

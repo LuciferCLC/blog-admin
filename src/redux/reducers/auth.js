@@ -3,12 +3,10 @@ import { initAuth } from '../actions/auth';
 
 const initialState = {};
 const authReducer = handleActions({
-  [initAuth]: (state, { payload }) => {
-    console.log(payload);
-    return {
-      ...state,
-    };
-  },
+  [initAuth]: (state, { payload }) => ({
+    ...state,
+    auth: payload.result,
+  }),
 }, initialState);
 
 export { authReducer };

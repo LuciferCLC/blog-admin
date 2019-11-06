@@ -38,11 +38,7 @@ HeaderRightContent.propTypes = {
   currentUser: PropTypes.shape({
     username: PropTypes.string,
     gravatar: PropTypes.string,
-  }),
-};
-
-HeaderRightContent.defaultProps = {
-  currentUser: { username: 'Nolan', gravatar: '' },
+  }).isRequired,
 };
 
 export { HeaderRightContent };

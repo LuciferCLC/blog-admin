@@ -70,7 +70,7 @@ class PageLayout extends PureComponent {
           <Header
             collapsed={collapsed}
             toggle={this.toggle}
-            currentUser={useInfo && useInfo.getInfo}
+            currentUser={useInfo}
             onMenuClick={this.handleMenuClick}
           />
           <BreadcrumbView />
@@ -88,14 +88,9 @@ PageLayout.propTypes = {
     pathname: PropTypes.string,
   }).isRequired,
   useInfo: PropTypes.shape({
-    getInfo: PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      username: PropTypes.string,
-      password: PropTypes.string,
-      slogan: PropTypes.string,
-      gravatar: PropTypes.string,
-    }),
+    username: PropTypes.string,
+    slogan: PropTypes.string,
+    gravatar: PropTypes.string,
   }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,

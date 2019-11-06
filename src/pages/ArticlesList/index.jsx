@@ -11,6 +11,23 @@ import { ExpandedRowRender } from './ExpandedRowRender';
 const { Column } = Table;
 
 class Articles extends PureComponent {
+  state = {
+    // keyword: '',
+  }
+
+  search = (keyword) => {
+    console.log(keyword);
+    this.setState({
+      // keyword,
+    });
+  };
+
+  onChange = (e, typeName) => {
+    this.setState({
+      [typeName]: e.target.value,
+    });
+  };
+
   render() {
     const typeList = [
       {
