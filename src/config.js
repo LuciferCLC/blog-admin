@@ -1,3 +1,3 @@
 const IS_DEV = process.env.NODE_ENV !== 'production';
 
-export const API_ROOT = IS_DEV ? 'http://localhost:8080/api/' : 'https://api.nolan.cc/api/';
+export const API_ROOT = IS_DEV ? 'http://localhost:8000/api/' : 'https://api.nolan.cc/api/';
