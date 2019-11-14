@@ -34,6 +34,17 @@ const routes = [{
     meta: { requiresAuth: true, icon: 'icon-write' }
   }]
 }, {
+  path: '/',
+  name: '文章标签',
+  component: Index,
+  meta: { leaf: true, icon: 'icon-tag' },
+  children: [{
+    path: '/tag',
+    component: () => import(/* webpackChunkName: "tag" */ '@/pages/Tags.vue'),
+    name: '文章标签',
+    meta: { equiresAuth: true, icon: 'icon-tag' }
+  }]
+}, {
   path: '/login',
   name: 'login',
   component: () => import(/* webpackChunkName: "login" */ '@/pages/Login.vue'),

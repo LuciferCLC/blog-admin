@@ -4,7 +4,7 @@
       <div class="logo font-futura">
         <router-link to="/">
           <img src="../assets/images/logo.png" alt="" width="46">
-          <span>Nolan</span>
+          <span>olan</span>
         </router-link>
       </div>
       <div class="user">
@@ -138,6 +138,11 @@ header {
     font-size: $font-size-logo;
     color: white;
     justify-content: center;
+    img {
+      width: 25px;
+      margin-right: 2px;
+      transform: translateY(-4px);
+    }
   }
   >.user {
     .el-button {
