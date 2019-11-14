@@ -120,7 +120,7 @@
 </template>
 
 <script>
-import * as Sortable from 'sortablejs'
+import Sortable from 'sortablejs'
 
 import { error } from '@/utils/response'
 
