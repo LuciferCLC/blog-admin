@@ -109,7 +109,8 @@ export default {
   },
 
   watch: {
-    '$route': (val, oldVal) => {
+    // 不要使用箭头函数
+    '$route' (val, oldVal) {
       this.defaultPath = val.path
       this.currentPathName = val.name || ''
       this.currentPathNameParent = val.matched[0].name || ''
