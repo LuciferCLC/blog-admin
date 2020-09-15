@@ -1,0 +1,14 @@
+@import '~antd/dist/antd.css';
+
+html {
+  box-sizing: border-box; /* 1 */
+  cursor: default; /* 2 */
+  -ms-text-size-adjust: 100%; /* 3 */
+  -webkit-text-size-adjust: 100%; /* 3 */
+}
+
+.content {
+  padding: 24px;
+  margin: 24px;
+  background: #fff;
+}
